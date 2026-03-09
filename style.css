@@ -11,8 +11,14 @@ body{margin:0;min-height:100vh;font-family:system-ui,sans-serif;color:#e2e8f0;ba
 #antworten button{border:2px solid rgba(255,255,255,.12);border-radius:999px;padding:.9rem 1.1rem;font-size:1rem;font-weight:600;color:#e2e8f0;background:rgba(255,255,255,.08);cursor:pointer;transition:transform .15s ease,background .15s ease,border-color .15s ease;box-shadow:0 16px 28px rgba(0,0,0,.22);}
 #antworten button:hover{transform:translateY(-2px);background:rgba(255,255,255,.14);border-color:rgba(34,197,94,.4);}
 #antworten button:active{transform:translateY(0);}
-#ergebnis{margin:1.75rem auto 0;text-align:center;font-weight:700;letter-spacing:.02em;padding:.8rem 1.2rem;border-radius:999px;background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.35);box-shadow:0 14px 26px rgba(0,0,0,.25);max-width:90%;display:none;transform:translateY(-.2rem);font-size:1.05rem;}
-#ergebnis.visible{display:inline-block;}
+#antworten input.text-antwort{width:100%;padding:.8rem 1rem;margin-bottom:.75rem;border-radius:999px;border:2px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:#e2e8f0;font-size:1rem;outline:none;}
+#antworten input.text-antwort:focus{border-color:rgba(34,197,94,.6);box-shadow:0 0 0 2px rgba(34,197,94,.2);}
+#ergebnis{margin:1.75rem auto 0;text-align:left;font-weight:700;letter-spacing:.02em;padding:1rem 1.2rem;border-radius:22px;background:rgba(34,197,94,.18);border:1px solid rgba(34,197,94,.35);box-shadow:0 14px 26px rgba(0,0,0,.25);max-width:90%;display:none;transform:translateY(-.2rem);font-size:1.05rem;}
+#ergebnis.visible{display:block;}
+#ergebnis ul.ergebnis-liste{margin:1rem 0 0;padding:0 0 0 1.1rem;text-align:left;}
+#ergebnis ul.ergebnis-liste li{margin:.5rem 0;}
+#ergebnis button#restart{margin-top:1rem;padding:.6rem 1rem;border:none;border-radius:999px;background:rgba(255,255,255,.15);color:#e2e8f0;font-weight:700;cursor:pointer;}
+#ergebnis button#restart:hover{background:rgba(255,255,255,.22);}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 @keyframes floatCard{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 @media(max-width:510px){body{padding:1.5rem 1rem}.quiz__card{padding:1.6rem}#antworten button{font-size:.95rem}}
