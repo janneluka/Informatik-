@@ -61,6 +61,7 @@ function shuffle(arr) {
 
 let aktuelleFrage = 0;
 let punkte = 0;
+let startTime = null;
 const antwortenLog = [];
 
 function showFrage() {
@@ -112,6 +113,10 @@ function showFrage() {
 }
 
 function pruefeAntwort(selection) {
+  if (startTime === null) {
+    startTime = Date.now();
+  }
+
   const frage = fragen[aktuelleFrage];
   let korrekt = false;
   let gewählteAntwort = "";
@@ -166,7 +171,12 @@ function zeigeErgebnis() {
   const prozent = (punkte / fragen.length) * 100;
   const gruppe = prozent >= 80 ? "high" : prozent >= 50 ? "mid" : "low";
 
-  const summary = `<strong>Du hast ${punkte} von ${fragen.length} Fragen richtig.</strong> — ${rand(messages[gruppe])}${quote ? "<br>" + quote : ""}`;
+  const elapsed = startTime ? Date.now() - startTime : 0;
+  const minutes = Math.floor(elapsed / 60000);
+  const seconds = Math.floor((elapsed % 60000) / 1000);
+  const timeText = `${minutes}m ${seconds}s`;
+
+  const summary = `<strong>Du hast ${punkte} von ${fragen.length} Fragen richtig.</strong> — ${rand(messages[gruppe])}<br><em class="timer">Benötigte Zeit: <strong>${timeText}</strong></em>${quote ? "<br>" + quote : ""}`;
 
   const details = antwortenLog
     .map((eintrag) => {
