@@ -13,7 +13,6 @@ const fragen = [
   { typ: "mc", frage: "Wie viele Buchstaben hat das Wort 'Alphabet'?", antworten: ["26", "27", "8"], richtige: 2 },
   { typ: "text", frage: "Wie heißt die Hauptstadt von Frankreich?", richtige: ["paris"] },
   { typ: "text", frage: "Wie viele Tage hat der Februar in einem normalen Jahr?", richtige: ["28"] },
-  { typ: "text", frage: "Wie lautet das chemische Symbol für Wasser?", richtige: ["h2o", "wasser", "wasserstoffoxid"] },
   { typ: "text", frage: "In welchem Jahr begann der Zweite Weltkrieg?", richtige: ["1939"] },
   { typ: "text", frage: "Was ist die Quadratwurzel von 9?", richtige: ["3"] },
   { typ: "tf", frage: "Die Sonne ist ein Planet.", richtige: false },
@@ -21,6 +20,38 @@ const fragen = [
   { typ: "tf", frage: "Ein Jahr hat 365 Tage.", richtige: true },
   { typ: "tf", frage: "Ein Rechteck hat immer vier Seiten.", richtige: true },
   { typ: "tf", frage: "Der Mount Everest ist kleiner als der Kilimandscharo.", richtige: false },
+  { typ: "mc", frage: "Wie viele Sekunden hat eine Minute?", antworten: ["60", "100", "30"], richtige: 0 },
+{ typ: "mc", frage: "Was ist 5 + 7?", antworten: ["11", "12", "13"], richtige: 1 },
+{ typ: "mc", frage: "Welche Farbe entsteht aus Blau und Gelb?", antworten: ["Grün", "Lila", "Orange"], richtige: 0 },
+{ typ: "mc", frage: "Wie viele Kontinente gibt es auf der Erde?", antworten: ["5", "6", "7"], richtige: 2 },
+{ typ: "mc", frage: "Welches Tier ist ein Säugetier?", antworten: ["Hai", "Delfin", "Adler"], richtige: 1 },
+{ typ: "mc", frage: "Wie viele Stunden hat ein Tag?", antworten: ["12", "24", "36"], richtige: 1 },
+{ typ: "mc", frage: "Welches Metall ist flüssig bei Raumtemperatur?", antworten: ["Eisen", "Quecksilber", "Kupfer"], richtige: 1 },
+{ typ: "mc", frage: "Wie viele Seiten hat ein Dreieck?", antworten: ["3", "4", "5"], richtige: 0 },
+{ typ: "mc", frage: "Welcher Planet ist der Sonne am nächsten?", antworten: ["Merkur", "Mars", "Venus"], richtige: 0 },
+{ typ: "mc", frage: "Wie viele Minuten hat eine Stunde?", antworten: ["30", "60", "90"], richtige: 1 },
+
+{ typ: "text", frage: "Wie heißt die Hauptstadt von Deutschland?", richtige: ["berlin"] },
+{ typ: "text", frage: "Wie viele Kontinente gibt es?", richtige: ["7"] },
+{ typ: "text", frage: "Wie viele Seiten hat ein Quadrat?", richtige: ["4"] },
+{ typ: "text", frage: "Welcher Planet wird auch der rote Planet genannt?", richtige: ["mars"] },
+{ typ: "text", frage: "Wie viele Tage hat eine Woche?", richtige: ["7"] },
+{ typ: "text", frage: "Wie viele Stunden hat ein Tag?", richtige: ["24"] },
+{ typ: "text", frage: "Wie lautet die Formel für Wasser?", richtige: ["h2o"] },
+{ typ: "text", frage: "Wie viele Minuten hat eine Stunde?", richtige: ["60"] },
+{ typ: "text", frage: "Welcher Kontinent ist Deutschland zugeordnet?", richtige: ["europa"] },
+{ typ: "text", frage: "Wie viele Beine hat eine Spinne?", richtige: ["8"] },
+
+{ typ: "tf", frage: "Ein Dreieck hat drei Seiten.", richtige: true },
+{ typ: "tf", frage: "Die Erde ist flach.", richtige: false },
+{ typ: "tf", frage: "Wasser gefriert bei 0 Grad Celsius.", richtige: true },
+{ typ: "tf", frage: "Ein Jahr hat 12 Monate.", richtige: true },
+{ typ: "tf", frage: "Die Sonne dreht sich um die Erde.", richtige: false },
+{ typ: "tf", frage: "Ein Quadrat hat vier gleich lange Seiten.", richtige: true },
+{ typ: "tf", frage: "Ein Kilometer sind 100 Meter.", richtige: false },
+{ typ: "tf", frage: "Ein Mensch hat normalerweise zwei Augen.", richtige: true },
+{ typ: "tf", frage: "Die Hauptstadt von Italien ist Rom.", richtige: true },
+{ typ: "tf", frage: "Ein Tag hat 48 Stunden.", richtige: false },
 ];
 
 const get = (id) => document.getElementById(id);
@@ -57,6 +88,7 @@ function shuffle(arr) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
+  return arr;
 }
 
 let aktuelleFrage = 0;
@@ -65,7 +97,7 @@ let startTime = null;
 const antwortenLog = [];
 
 function showFrage() {
-  const frage = fragen[aktuelleFrage];
+  const frage = quizFragen[aktuelleFrage];
   frageEl.innerText = frage.frage;
   antwortenEl.innerHTML = "";
 
@@ -117,7 +149,7 @@ function pruefeAntwort(selection) {
     startTime = Date.now();
   }
 
-  const frage = fragen[aktuelleFrage];
+  const frage = quizFragen[aktuelleFrage];
   let korrekt = false;
   let gewählteAntwort = "";
   let richtigeAntwort = "";
@@ -151,7 +183,7 @@ function pruefeAntwort(selection) {
   });
 
   aktuelleFrage++;
-  if (aktuelleFrage < fragen.length) {
+  if (aktuelleFrage < quizFragen.length) {
     showFrage();
   } else {
     zeigeErgebnis();
@@ -162,13 +194,13 @@ function zeigeErgebnis() {
   frageEl.innerText = "Test beendet";
   antwortenEl.innerHTML = "";
 
-  const quote = punkte === fragen.length
+const quote = punkte === quizFragen.length
     ? "Perfekt! Alle Antworten sind richtig."
     : punkte === 0
-    ? "Kein Problem, einfach nochmal versuchen." 
+    ? "Kein Problem, einfach nochmal versuchen."
     : "";
 
-  const prozent = (punkte / fragen.length) * 100;
+  const prozent = (punkte / quizFragen.length) * 100;
   const gruppe = prozent >= 80 ? "high" : prozent >= 50 ? "mid" : "low";
 
   const elapsed = startTime ? Date.now() - startTime : 0;
@@ -176,7 +208,7 @@ function zeigeErgebnis() {
   const seconds = Math.floor((elapsed % 60000) / 1000);
   const timeText = `${minutes}m ${seconds}s`;
 
-  const summary = `<strong>Du hast ${punkte} von ${fragen.length} Fragen richtig.</strong> — ${rand(messages[gruppe])}<br><em class="timer">Benötigte Zeit: <strong>${timeText}</strong></em>${quote ? "<br>" + quote : ""}`;
+  const summary = `<strong>Du hast ${punkte} von ${quizFragen.length} Fragen richtig.</strong> — ${rand(messages[gruppe])}<br><em class="timer">Benötigte Zeit: <strong>${timeText}</strong></em>${quote ? "<br>" + quote : ""}`;
 
   const details = antwortenLog
     .map((eintrag) => {
@@ -200,5 +232,7 @@ function zeigeErgebnis() {
   get("restart").addEventListener("click", () => window.location.reload());
 }
 
-shuffle(fragen);
+const MAX_FRAGEN = 20;
+const quizFragen = shuffle([...fragen]).slice(0, Math.min(MAX_FRAGEN, fragen.length));
+
 showFrage();
